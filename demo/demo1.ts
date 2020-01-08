@@ -7,10 +7,11 @@ document.body.appendChild(view.canvas);
 
 const n1 = new topo.TopoNode();
 const n2 = new topo.TopoNode();
+const n3 = { x: 100, y: 100};
 const edge = new topo.TopoEdge();
 n1.translate(300, 100);
 n2.translate(500, 200);
-edge.points.push(n1, n2);
+edge.points.push(n1, n3, n2);
 edge.color = '#5af';
 view.add(edge);
 view.add(n1);
