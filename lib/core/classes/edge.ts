@@ -1,6 +1,7 @@
 import TopoElement from './element';
 import TopoLine from '../interfaces/line';
 import Coord from '../interfaces/coord';
+import isPointOnLine from '../../util/isPointOnLine';
 
 class TopoEdge extends TopoElement implements TopoLine {
   points: Coord[];
@@ -18,8 +19,6 @@ class TopoEdge extends TopoElement implements TopoLine {
   }
 
   render (ctx: CanvasRenderingContext2D):void {
-    if (this.points.length < 2) return;
-
     ctx.beginPath();
     this.points.forEach((p, i) => {
       if (i === 0) {
@@ -36,16 +35,10 @@ class TopoEdge extends TopoElement implements TopoLine {
   }
 
   contain (x: number, y: number):boolean {
-    if (this.points.length < 2) return false;
     let { x: x1, y: y1 } = this.points[0];
     let { x: x2, y: y2 } = this.points[this.points.length - 1];
 
-    x1 -= x;
-    y1 -= y;
-    x2 -= x;
-    y2 -= y;
-
-    return x1 * y2 - x2 * y1 === 0;
+    return isPointOnLine(x1, y1, x2, y2, x, y);
   }
 }
 
