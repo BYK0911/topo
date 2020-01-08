@@ -33,8 +33,6 @@ view.on('mousewheel', e => {
     delta = _e.wheelDelta || _e.detail,
     s = view.scale;
 
-  console.log(e.path)
-
   view.zoom(delta > 0);
 
   view.translate(e.x / view.scale - e.x / s, e.y / view.scale - e.y / s)
