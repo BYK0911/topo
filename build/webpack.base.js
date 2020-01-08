@@ -3,10 +3,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: {
-    topo: path.resolve(__dirname, '../lib/index.ts')
-  },
-
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name].[hash].js'

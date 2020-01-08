@@ -10,6 +10,7 @@
   "main": "lib/index.ts",
   "scripts": {
     "build": "webpack --config build/webpack.prod.js",
+    "build:demo": "webpack --config build/webpack.demo.js",
     "dev": "webpack-dev-server --open --config build/webpack.dev.js",
     "start": "npm run dev"
   },

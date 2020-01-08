@@ -4,8 +4,7 @@ const path = require('path');
 
 module.exports = merge(base, {
   mode: 'production',
-
   entry: {
-    topo: path.resolve(__dirname, '../lib/index.ts')
+    demo: path.resolve(__dirname, '../demo')
   }
 })

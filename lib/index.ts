@@ -37,6 +37,7 @@ const topo = {
       let { x: x1, y: y1 } = e.target.getRelativeCoord(e.originalEvent.offsetX, e.originalEvent.offsetY);
       let dx = x1 - x0;
       let dy = y1 - y0;
+      
       e.target.translate(dx, dy);
       prevX = e.originalEvent.offsetX;
       prevY = e.originalEvent.offsetY;
