@@ -59,6 +59,16 @@ class TopoView extends TopoGroup {
     return coord;
   }
 
+  getAbsoluteCoord (x:number = 0, y:number = 0) {
+    let coord = new Coord(x, y);
+    
+    coord.rotate(this.rotation);
+    coord.translate(this.x, this.y);
+    coord.scale(this.scale, this.scale);
+
+    return coord;
+  }
+
   contain (x: number, y: number) :boolean {
     return true;
   }

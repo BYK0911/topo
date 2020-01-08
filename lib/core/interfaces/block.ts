@@ -13,6 +13,7 @@ interface TopoBlockElement extends TopoElement{
   translate: (x: number, y: number) => void;
   rotate: (angle: number) => void;
   getRelativeCoord: (x: number, y: number) => Coord;
+  getAbsoluteCoord: (x: number, y: number) => Coord;
   zoom: (isZoomIn: boolean) => void;
 }
 

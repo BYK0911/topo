@@ -53,6 +53,16 @@ class TopoBlock extends TopoElement implements ITopoBlock {
 
     return coord;
   }
+
+  getAbsoluteCoord (x:number = 0, y:number = 0) {
+    let coord = new Coord(x, y);
+    
+    coord.rotate(this.rotation);
+    coord.scale(this.scale, this.scale);
+    coord.translate(this.x, this.y);
+
+    return coord;
+  }
 }
 
 export default TopoBlock;
