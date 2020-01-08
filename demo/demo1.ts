@@ -23,8 +23,6 @@ view.resize(window.innerWidth, window.innerHeight);
   view.render();
 }());
 
-console.log(view)
-
 let prevX = 0;
 let prevY = 0;
 
@@ -48,7 +46,6 @@ view.on('drag', e => {
   
   let dx = (e.originalEvent.offsetX - prevX) / view.scale;
   let dy = (e.originalEvent.offsetY - prevY) / view.scale;
-  console.log(e.target.type)
   e.target.translate(dx, dy);
   prevX = e.originalEvent.offsetX;
   prevY = e.originalEvent.offsetY;
