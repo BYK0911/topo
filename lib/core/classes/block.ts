@@ -37,7 +37,7 @@ class TopoBlock extends TopoElement implements ITopoBlock {
   }
 
   rotate (angle: number):void {
-    this.rotation = (this.rotation + angle) % (Math.PI * 2);
+    this.rotation = (this.rotation + angle) % 360;
   }
 
   zoom (isZoomIn: boolean) {

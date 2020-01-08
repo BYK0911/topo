@@ -9,11 +9,17 @@ class TopoNode extends TopoBlock {
   }
 
   render (ctx: CanvasRenderingContext2D):void {
-    let { x, y, width, height } = this;
+    let {x, y, width, height } = this;
     x -= width / 2;
     y -= height / 2;
+    
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(this.scale, this.scale);
+    ctx.rotate(this.rotation / 180 * Math.PI)
     ctx.fillStyle = '#fa5';
-    ctx.fillRect(x, y, width, height);
+    ctx.fillRect(0, 0, width, height);
+    ctx.restore();
   }
 }
 
