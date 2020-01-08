@@ -34,6 +34,7 @@ class TopoView extends TopoGroup {
     this.ctx.save();
     this.ctx.scale(this.scale, this.scale);
     this.ctx.translate(this.x, this.y);
+    this.ctx.rotate(this.rotation / 180 * Math.PI)
     this.elements.forEach(elem => {
       if (elem.visible) elem.render(this.ctx)
     });
