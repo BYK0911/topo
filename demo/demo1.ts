@@ -2,45 +2,77 @@ import topo from '../lib';
 
 const view = topo.init();
 
+view.resize(window.innerWidth, window.innerHeight);
+
 document.body.style.margin = '0';
 document.body.appendChild(view.canvas);
 
-const n1 = new topo.TopoNode();
-const n2 = new topo.TopoNode();
-const edge = new topo.TopoZEdge();
-n1.translate(300, 100);
-n2.translate(400, 200);
-edge.points.push(n1, n2);
-
-const n3 = new topo.TopoNode();
-const n4 = new topo.TopoNode();
-const edge2 = new topo.TopoSEdge();
-n3.translate(600, 100);
-n4.translate(700, 200);
-edge2.points.push(n3, n4);
-edge2.color = '#5af';
-
-const n5 = new topo.TopoNode();
-const n6 = new topo.TopoNode();
-const edge3 = new topo.TopoEdge();
-n5.translate(900, 100);
-n6.translate(1000, 200);
-edge3.points.push(n5, n6);
-
-view.add(edge);
-view.add(edge2);
-view.add(edge3);
-view.add(n1);
-view.add(n2);
-view.add(n3);
-view.add(n4);
-view.add(n5);
-view.add(n6);
-
-view.resize(window.innerWidth, window.innerHeight);
-
-(function animate () {
+function animate () {
   window.requestAnimationFrame(animate)
   view.render();
-}());
+}
 
+interface TopoNode {
+  type: string;
+  id: string;
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
+}
+interface TopoEdge {
+  type: string;
+  points: string[];
+  lineWidth: number;
+  color: string;
+  lineDash: number[];
+}
+
+let nodes = [
+  { type: 'TopoNode', id: '0', x: 100, y: 100 },
+  { type: 'TopoNode', id: '1', x: 200, y: 100 },
+  { type: 'TopoNode', id: '2', x: 300, y: 100 },
+  { type: 'TopoNode', id: '3', x: 400, y: 100 },
+  { type: 'TopoNode', id: '4', x: 300, y: 200 },
+  { type: 'TopoNode', id: '5', x: 400, y: 200 },
+  { type: 'TopoNode', id: '6', x: 500, y: 200 }
+]
+let edges = [
+  { type: 'TopoEdge', points: ['1', '4'], lineWidth: 1, color: '#333', lineDash: [0] },
+  { type: 'TopoZEdge', points: ['2', '5'], lineWidth: 1, color: '#333', lineDash: [5, 5] },
+  { type: 'TopoSEdge', points: ['3', '6'], lineWidth: 1, color: '#fa5', lineDash: [0] }
+]
+function loadView(nodes:TopoNode[], edges:TopoEdge[]) {
+  const ns = [], nmap = {}, es = [];
+
+  nodes.forEach(n => {
+    const node = new topo.TopoNode();
+    Object.assign(node, n);
+
+    ns.push(node);
+    nmap[n.id] = node;
+  })
+
+  edges.forEach(e => {
+    const edge = new topo[e.type]();
+    edge.lineWidth = e.lineWidth;
+    edge.lineDash = e.lineDash;
+    edge.color = e.color;
+    e.points.forEach(nid => {
+      let n = {};
+      Object.defineProperties(n, {
+        x: { get: () => nmap[nid].getAbsoluteCoord().x },
+        y: { get: () => nmap[nid].getAbsoluteCoord().y }
+      })
+      edge.points.push(n);
+    })
+
+    es.push(edge);
+  })
+
+  view.elements = [...es, ...ns];
+}
+
+loadView(nodes, edges);
+
+animate();
