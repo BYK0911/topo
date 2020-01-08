@@ -7,7 +7,7 @@ class TopoEvent {
   y:number;
   target:TopoEventTarget|null;
   path:TopoEventTarget[];
-  originalEvent;
+  originalEvent: Event;
   private _preventDefault: boolean;
   private _stopPropergation: boolean;
 

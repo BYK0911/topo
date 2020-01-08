@@ -1,10 +1,10 @@
-import TopoNodeElement from './core/classes/TopoNodeElement';
-import TopoEdgeElement from './core/classes/TopoEdgeElement';
-import TopoView from './core/classes/TopoView';
+import TopoNode from './core/classes/node';
+import TopoEdge from './core/classes/edge';
+import TopoView from './core/classes/view';
 
 const topo = {
-  TopoNodeElement,
-  TopoEdgeElement,
+  TopoNode,
+  TopoEdge,
 
   init () {
     const tp:TopoView = new TopoView();

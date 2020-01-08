@@ -1,30 +1,16 @@
 import attachEvent from '../../event/attachEvent';
+import TopoGroup from './group';
+import Coord from '../../util/coord';
 
-import TopoNodeElement from "./TopoNodeElement";
-import TopoEventTarget from "../../event/TopoEventTarget";
-import TopoEdgeElement from "./TopoEdgeElement";
-
-let id:number = 0;
-
-class TopoView extends TopoEventTarget {
-  id:string;
-  nodes:TopoNodeElement[];
-  edges:TopoEdgeElement[];
+class TopoView extends TopoGroup {
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
-  offsetX: number;
-  offsetY: number;
-  width: number;
-  height: number;
   backgroundColor: string;
 
   constructor () {
     super();
-    this.id = 'TopoView_' + id++;
-    this.nodes = [];
-    this.edges = [];
-    this.offsetX = 0;
-    this.offsetY = 0;
+    this.type = 'TopoView';
+    this.scale = 1;
     this.width = 500;
     this.height = 400;
     this.backgroundColor = '#f0f0f0';
@@ -44,12 +30,14 @@ class TopoView extends TopoEventTarget {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.ctx.fillStyle = this.backgroundColor;
     this.ctx.fillRect(0, 0, this.width, this.height);
-    this.edges.forEach(edge => {
-      if (edge.visible) edge.render(this.ctx)
+
+    this.ctx.save();
+    this.ctx.scale(this.scale, this.scale);
+    this.ctx.translate(this.x, this.y);
+    this.elements.forEach(elem => {
+      if (elem.visible) elem.render(this.ctx)
     });
-    this.nodes.forEach(n => {
-      if (n.visible) n.render(this.ctx)
-    });
+    this.ctx.restore();
   }
 
   resize (width: number, height: number):void {
@@ -61,14 +49,18 @@ class TopoView extends TopoEventTarget {
     this.canvas.style.height = height + 'px';
   }
 
-  addNode (node:TopoNodeElement):void {
-    if (this.nodes.includes(node)) return;
-    this.nodes.push(node);
+  getRelativeCoord (x:number = 0, y:number = 0) {
+    let coord = new Coord(x, y);
+
+    coord.scale(1 / this.scale, 1 / this.scale);
+    coord.translate(-this.x, -this.y);
+    coord.rotate(-this.rotation);
+
+    return coord;
   }
 
-  addEdge (edge:TopoEdgeElement):void{
-    if(this.edges.includes(edge)) return;
-    this.edges.push(edge);
+  contain (x: number, y: number) :boolean {
+    return true;
   }
 }
 

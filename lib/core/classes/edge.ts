@@ -1,13 +1,20 @@
-import TopoElement from './TopoElement';
-import ITopoEdgeElement from '../interfaces/TopoEdgeElement';
-import Coord from '../interfaces/Coord';
+import TopoElement from './element';
+import TopoLine from '../interfaces/line';
+import Coord from '../interfaces/coord';
 
-class TopoEdgeElement extends TopoElement implements ITopoEdgeElement {
+class TopoEdge extends TopoElement implements TopoLine {
   points: Coord[];
+  lineDash: [0];
+  lineWidth: number;
+  color: string;
 
   constructor () {
     super();
+    this.type = 'TopoEdge';
     this.points = [];
+    this.lineDash = [0];
+    this.lineWidth = 1;
+    this.color = '#666';
   }
 
   render (ctx: CanvasRenderingContext2D):void {
@@ -22,7 +29,9 @@ class TopoEdgeElement extends TopoElement implements ITopoEdgeElement {
       }
     })
     ctx.closePath();
-    ctx.strokeStyle = '#5af';
+    ctx.setLineDash(this.lineDash);
+    ctx.lineWidth = this.lineWidth;
+    ctx.strokeStyle = this.color;
     ctx.stroke();
   }
 
@@ -38,14 +47,6 @@ class TopoEdgeElement extends TopoElement implements ITopoEdgeElement {
 
     return x1 * y2 - x2 * y1 === 0;
   }
-
-  show ():void {
-    this.visible = true;
-  }
-
-  hide ():void {
-    this.visible = false;
-  }
 }
 
-export default TopoEdgeElement;
+export default TopoEdge;
