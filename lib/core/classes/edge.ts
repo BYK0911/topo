@@ -28,11 +28,11 @@ class TopoEdge extends TopoElement implements TopoLine {
         ctx.lineTo(p.x, p.y);
       }
     })
-    ctx.closePath();
     ctx.setLineDash(this.lineDash);
     ctx.lineWidth = this.lineWidth;
     ctx.strokeStyle = this.color;
     ctx.stroke();
+    ctx.closePath();
   }
 
   contain (x: number, y: number):boolean {
