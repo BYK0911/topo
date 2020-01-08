@@ -1,6 +1,8 @@
 import topo from '../lib';
 
 const view = topo.init();
+view.rotate(15);
+view.translate(300, 0);
 
 view.resize(window.innerWidth, window.innerHeight);
 
