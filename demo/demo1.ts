@@ -1,6 +1,10 @@
 import topo from '../lib';
+import zoomable from '../lib/plugin/zoomable';
+import draggable from '../lib/plugin/draggable'
 
 const view = topo.init();
+zoomable(view);
+draggable(view);
 view.rotate(15);
 view.translate(300, 0);
 
@@ -49,6 +53,7 @@ function loadView(nodes:TopoNode[], edges:TopoEdge[]) {
 
   nodes.forEach(n => {
     const node = new topo.TopoNode();
+    draggable(node);
     Object.assign(node, n);
 
     ns.push(node);
