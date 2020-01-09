@@ -2,13 +2,16 @@
 import TopoElement from './element';
 import Coord from './coord';
 
-interface TopoBlockElement extends TopoElement{
+interface TopoBlock extends TopoElement{
   x: number;
   y: number;
   width: number;
   height: number;
   rotation: number;
   scale: number;
+  backgroundColor: string;
+  borderWidth: number;
+  borderColor: string;
 
   translate: (x: number, y: number) => void;
   rotate: (angle: number) => void;
@@ -17,4 +20,4 @@ interface TopoBlockElement extends TopoElement{
   zoom: (isZoomIn: boolean) => void;
 }
 
-export default TopoBlockElement;
+export default TopoBlock;

@@ -3,8 +3,14 @@ import ITopoGroup from '../interfaces/group';
 import TopoElement from './element';
 
 class TopoGroup extends TopoBlock implements ITopoGroup {
-  elements: TopoElement[];
+  protected elements: TopoElement[];
   readonly type: string = 'TopoGroup';
+  backgroundImage: string = '';
+  borderColor: string = '#ddd';
+
+  get children (): TopoElement[] {
+    return this.elements;
+  } 
   constructor () {
     super();
     this.elements = [];
@@ -46,7 +52,7 @@ class TopoGroup extends TopoBlock implements ITopoGroup {
       elem.parent = null;
       elem.root = null;
     })
-    this.elements = [];
+    this.elements.splice(0, this.elements.length);
   }
 }
 

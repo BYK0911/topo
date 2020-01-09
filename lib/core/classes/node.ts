@@ -1,15 +1,23 @@
+import ITopoBlock from '../interfaces/block';
 import TopoBlock from './block';
 
-class TopoNode extends TopoBlock {
+class TopoNode extends TopoBlock implements ITopoBlock{
   readonly type: string = 'TopoNode';
-  constructor () {
-    super();
-    this.width = 50;
-    this.height = 50;
-  }
+
+  icon: string = '';
+  backgroundColor: string = '#fa5';
+  width: number = 50;
+  height: number = 50;
+
+  constructor () { super() }
 
   render (ctx: CanvasRenderingContext2D):void {
-    let {x, y, width, height } = this;
+    let {
+      x, y, width, height,
+      shadowOffsetX, shadowOffsetY, shadowColor, shadowBlur,
+      borderWidth, borderColor,
+      backgroundColor, opacity
+    } = this;
     x -= width / 2;
     y -= height / 2;
     
@@ -17,8 +25,25 @@ class TopoNode extends TopoBlock {
     ctx.translate(x, y);
     ctx.rotate(this.rotation / 180 * Math.PI)
     ctx.scale(this.scale, this.scale);
-    ctx.fillStyle = '#fa5';
+
+    ctx.globalAlpha = opacity;
+    
+    if (shadowBlur) {
+      ctx.shadowOffsetX = shadowOffsetX;
+      ctx.shadowOffsetY = shadowOffsetY;
+      ctx.shadowColor = shadowColor;
+      ctx.shadowBlur = shadowBlur;
+    }
+
+    ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, width, height);
+
+    if (borderWidth) {
+      ctx.lineWidth = borderWidth;
+      ctx.strokeStyle = borderColor;
+      ctx.strokeRect(0, 0, width, height);
+    }
+
     ctx.restore();
   }
   

@@ -1,14 +1,17 @@
 import TopoElement from './element';
-import ITopoBlock from '../interfaces/block';
 import Coord from '../../util/coord';
 
-class TopoBlock extends TopoElement implements ITopoBlock {
+abstract class TopoBlock extends TopoElement {
   x: number;
   y: number;
   width: number;
   height: number;
   rotation: number;
   scale: number;
+  
+  backgroundColor: string = 'rgba(255, 255, 255, 0)';
+  borderWidth: number = 1;
+  borderColor: string = 'rgba(255, 255, 255, 0)';
 
   protected constructor () {
     super();

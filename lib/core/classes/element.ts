@@ -1,26 +1,23 @@
 import TopoEventTarget from '../../event/TopoEventTarget';
 import ITopoElement from '../interfaces/element';
-import TopoGroup from '../interfaces/group';
+import TopoGroup from './group';
 
 let id: number = 0;
-class TopoElement extends TopoEventTarget implements ITopoElement {
-  readonly id: string;
+abstract class TopoElement extends TopoEventTarget {
+  
+  readonly id: string = 'TopoElement_' + (id++);
   readonly type: string;
   root: ITopoElement;
   parent: TopoGroup;
-  visible: boolean;
-  
-  protected constructor () {
-    super();
-    this.id = 'TopoElement_' + id++;
-    this.root = null;
-    this.parent = null;
-    this.visible = true;
-  }
+  text: string = '';
+  shadowColor: string = 'rgba(255, 255, 255, 0)';
+  shadowOffsetX: number = 0;
+  shadowOffsetY: number = 0;
+  shadowBlur: number = 0;
+  opacity: number = 1;
+  visible: boolean = true;
 
-  render (ctx?: CanvasRenderingContext2D) {
-
-  }
+  abstract render (ctx?: CanvasRenderingContext2D):void;
 
   contain (x: number, y:number) :boolean {
     return false;

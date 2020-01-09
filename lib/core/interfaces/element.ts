@@ -1,9 +1,16 @@
 interface TopoElement {
   id: string;
-  visible: boolean;
   type: string;
   root: TopoElement;
   parent: TopoElement;
+  
+  text: string;
+  shadowColor: string;
+  shadowOffsetX: number;
+  shadowOffsetY: number;
+  shadowBlur: number;
+  opacity: number;
+  visible: boolean;
   
   render: (ctx?: CanvasRenderingContext2D) => void;
   contain: (x: number, y: number) => boolean;
