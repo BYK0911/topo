@@ -69,12 +69,14 @@ function loadView(nodes:TopoNode[], edges:TopoEdge[]) {
       edge.points.push(n);
     })
 
-    es.push(edge);
+    view.add(edge);
   })
 
-  view.elements = [...es, ...ns];
+  ns.forEach(n => view.add(n));
 }
 
 loadView(nodes, edges);
+
+console.log(view);
 
 animate();

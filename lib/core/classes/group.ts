@@ -14,7 +14,10 @@ class TopoGroup extends TopoBlock implements ITopoGroup {
   render (ctx: CanvasRenderingContext2D) {
     ctx.save();
     ctx.translate(this.x, this.y);
+    ctx.rotate(this.rotation / 180 * Math.PI);
+    ctx.scale(this.scale, this.scale);
     this.elements.forEach(el => el.render(ctx));
+    ctx.restore();
   }
 
   contain (x: number, y: number):boolean {

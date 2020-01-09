@@ -32,9 +32,9 @@ class TopoView extends TopoGroup {
     this.ctx.fillRect(0, 0, this.width, this.height);
 
     this.ctx.save();
-    this.ctx.scale(this.scale, this.scale);
     this.ctx.translate(this.x, this.y);
     this.ctx.rotate(this.rotation / 180 * Math.PI)
+    this.ctx.scale(this.scale, this.scale);
     this.elements.forEach(elem => {
       if (elem.visible) elem.render(this.ctx)
     });
@@ -50,25 +50,25 @@ class TopoView extends TopoGroup {
     this.canvas.style.height = height + 'px';
   }
 
-  getRelativeCoord (x:number = 0, y:number = 0) {
-    let coord = new Coord(x, y);
+  // getRelativeCoord (x:number = 0, y:number = 0) {
+  //   let coord = new Coord(x, y);
 
-    coord.scale(1 / this.scale, 1 / this.scale);
-    coord.translate(-this.x, -this.y);
-    coord.rotate(-this.rotation);
+  //   coord.scale(1 / this.scale, 1 / this.scale);
+  //   coord.translate(-this.x, -this.y);
+  //   coord.rotate(-this.rotation);
 
-    return coord;
-  }
+  //   return coord;
+  // }
 
-  getAbsoluteCoord (x:number = 0, y:number = 0) {
-    let coord = new Coord(x, y);
+  // getAbsoluteCoord (x:number = 0, y:number = 0) {
+  //   let coord = new Coord(x, y);
     
-    coord.rotate(this.rotation);
-    coord.translate(this.x, this.y);
-    coord.scale(this.scale, this.scale);
+  //   coord.rotate(this.rotation);
+  //   coord.translate(this.x, this.y);
+  //   coord.scale(this.scale, this.scale);
 
-    return coord;
-  }
+  //   return coord;
+  // }
 
   contain (x: number, y: number) :boolean {
     return true;

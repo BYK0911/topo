@@ -1,5 +1,4 @@
 import TopoEventTarget from './TopoEventTarget';
-import EventUtil from './EventUtil';
 
 class TopoEvent {
   type:string;
@@ -7,23 +6,23 @@ class TopoEvent {
   y:number;
   target:TopoEventTarget|null;
   path:TopoEventTarget[];
-  originalEvent: Event;
+  originalEvent: MouseEvent | WheelEvent;
   private _preventDefault: boolean;
-  private _stopPropergation: boolean;
+  private _stopPropagation: boolean;
 
   constructor (eventName: string, x: number, y: number) {
     this.type = eventName;
     this.x = x;
     this.y = y;
     this._preventDefault = false;
-    this._stopPropergation = false;
+    this._stopPropagation = false;
     this.target = null;
     this.path = [];
     this.originalEvent = null;
   }
 
-  stopPropergation ():void {
-    this._stopPropergation = true;
+  stopPropagation ():void {
+    this._stopPropagation = true;
   }
 
   preventDefault ():void {
@@ -33,17 +32,12 @@ class TopoEvent {
   trigger ():void {
     let i = this.path.length;
     let target:TopoEventTarget;
-    let handlers;
 
     while (--i > -1) {
       target = this.path[i];
-      handlers = EventUtil.match(target, this.type);
-
-      if (handlers) {
-        handlers.forEach(h => h.call(target, this));
-      }
+      target.dispatch(this);
       
-      if (this._stopPropergation) {
+      if (this._stopPropagation) {
         break;
       }
     }

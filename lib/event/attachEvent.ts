@@ -4,6 +4,7 @@ import TopoEvent from '../event/TopoEvent';
 import TopoEventTarget from "./TopoEventTarget";
 import TopoElement from "../core/classes/element";
 import TopoGroup from "../core/classes/group";
+import TopoBlock from "../core/classes/block";
 
 function attachEvent (view:TopoView) {
   const canvas = view.canvas;
@@ -23,11 +24,16 @@ function attachEvent (view:TopoView) {
 
   const refreshEventTarget = function (e: MouseEvent) {
     const collide = function (el:TopoElement|TopoGroup, x: number, y: number) {
+      if (el instanceof TopoBlock) {
+        let coord = el.getRelativeCoord(x, y);
+        x = coord.x;
+        y = coord.y;
+      }
+
       if (el.contain(x, y)) path.push(el);
 
       if (el instanceof TopoGroup) {
-        let coord = el.getRelativeCoord(x, y);
-        el.elements.forEach(child => collide(child, coord.x, coord.y))
+        el.elements.forEach(child => collide(child, x, y))
       }
     }
 
@@ -61,14 +67,14 @@ function attachEvent (view:TopoView) {
         let prevEventTarget:TopoEventTarget = path[path.length - 1] || null;
         // 重新计算当前的事件对象
         refreshEventTarget(e);
-        let currentEventTarget:TopoEventTarget = path[path.length - 1] || null;
+        let currentEventTarget:TopoEventTarget = path[path.length - 1];
         
         if (prevEventTarget === currentEventTarget) {
           trigger('mousemove', path, e);
         }
         else {
+          if (prevEventTarget) trigger('mouseleave', [prevEventTarget], e);
           trigger('mouseenter', [currentEventTarget], e);
-          trigger('mouseleave', [prevEventTarget], e);
         }
       }
     },
@@ -110,7 +116,7 @@ function attachEvent (view:TopoView) {
       e.preventDefault();
       trigger('mousewheel', path, e);
     },
-    DOMMouseScroll (e: MouseEvent) {
+    DOMMouseScroll (e: MouseWheelEvent) {
       e.preventDefault();
       trigger('mousewheel', path, e);
     }
