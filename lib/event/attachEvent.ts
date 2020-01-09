@@ -1,26 +1,25 @@
 
 import TopoView from "../core/classes/view";
 import TopoEvent from '../event/TopoEvent';
-import TopoEventTarget from "./TopoEventTarget";
 import TopoElement from "../core/classes/element";
 import TopoGroup from "../core/classes/group";
 import TopoBlock from "../core/classes/block";
 
 function attachEvent (view:TopoView) {
+  let mousemoveFlag:boolean;
+  let mousedownFlag:boolean;
+  let path:TopoElement[] = [];
+  let clickFlag:number;
+
   const canvas = view.canvas;
 
-  const trigger = function (eventName: string, path:TopoEventTarget[], originalEvent:MouseEvent) {
+  const trigger = function (eventName: string, path: TopoElement[], originalEvent: MouseEvent | WheelEvent) {
     const e:TopoEvent = new TopoEvent(eventName, originalEvent.offsetX, originalEvent.offsetY);
     e.target = path[path.length - 1];
     e.path = path;
     e.originalEvent = originalEvent;
     e.trigger();
   }
-
-  let mousemoveFlag:boolean;
-  let mousedownFlag:boolean;
-  let path:TopoEventTarget[] = [];
-  let clickFlag:number;
 
   const refreshEventTarget = function (e: MouseEvent) {
     const collide = function (el:TopoElement|TopoGroup, x: number, y: number) {
@@ -64,10 +63,10 @@ function attachEvent (view:TopoView) {
           trigger('drag', path, e);
         }
       } else {
-        let prevEventTarget:TopoEventTarget = path[path.length - 1] || null;
+        let prevEventTarget:TopoElement = path[path.length - 1] || null;
         // 重新计算当前的事件对象
         refreshEventTarget(e);
-        let currentEventTarget:TopoEventTarget = path[path.length - 1];
+        let currentEventTarget:TopoElement = path[path.length - 1];
         
         if (prevEventTarget === currentEventTarget) {
           trigger('mousemove', path, e);

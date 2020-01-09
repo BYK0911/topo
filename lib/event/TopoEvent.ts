@@ -1,11 +1,11 @@
-import TopoEventTarget from './TopoEventTarget';
+import TopoElement from '../core/classes/element';
 
 class TopoEvent {
   type:string;
   x:number;
   y:number;
-  target:TopoEventTarget|null;
-  path:TopoEventTarget[];
+  target:TopoElement;
+  path:TopoElement[];
   originalEvent: MouseEvent | WheelEvent;
   private _preventDefault: boolean;
   private _stopPropagation: boolean;
@@ -31,7 +31,7 @@ class TopoEvent {
 
   trigger ():void {
     let i = this.path.length;
-    let target:TopoEventTarget;
+    let target:TopoElement;
 
     while (--i > -1) {
       target = this.path[i];
