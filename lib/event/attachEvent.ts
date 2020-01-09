@@ -32,7 +32,7 @@ function attachEvent (view:TopoView) {
       if (el.contain(x, y)) path.push(el);
 
       if (el instanceof TopoGroup) {
-        el.elements.forEach(child => collide(child, x, y))
+        el.children.forEach(child => collide(child, x, y))
       }
     }
 
