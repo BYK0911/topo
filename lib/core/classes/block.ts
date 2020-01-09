@@ -23,17 +23,13 @@ class TopoBlock extends TopoElement implements ITopoBlock {
 
   contain (x: number, y: number):boolean {
     let { width: w, height: h } = this;
-    let coord = this.getRelativeCoord(x, y);
 
-    x = coord.x;
-    y = coord.y;
-
-    return x >= -w / 2 && x <= w / 2 && y >= -h / 2 && y <= h / 2;
+    return x >= 0 && x <= w && y >= 0 && y <= h;
   }
 
-  translate (x: number, y: number):void {
-    this.x += x;
-    this.y += y;
+  translate (dx: number, dy: number):void {
+    this.x += dx;
+    this.y += dy;
   }
 
   rotate (angle: number):void {
