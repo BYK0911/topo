@@ -5,6 +5,9 @@ interface TopoElement {
   parent: TopoElement;
   
   text: string;
+  textPosition: string;
+  fontSize: number;
+  textColor: string;
   shadowColor: string;
   shadowOffsetX: number;
   shadowOffsetY: number;

@@ -43,6 +43,10 @@ class TopoNode extends TopoBlock implements ITopoBlock{
       ctx.strokeRect(0, 0, width, height);
     }
 
+    if (this.text) {
+      this.drawText(ctx);
+    }
+
     ctx.restore();
   }
   

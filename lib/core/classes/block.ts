@@ -23,6 +23,20 @@ abstract class TopoBlock extends TopoElement {
     this.scale = 1;
   }
 
+  drawText (ctx: CanvasRenderingContext2D): void {
+    let { width, height, text, textColor, textPosition, fontSize: fs } = this;
+    let [align, vAlign] = textPosition.split('-');
+    let p = 4;
+    let x: number = align === 'left' ? -p : align === 'center' ? width / 2 : width + p;
+    let y: number = vAlign === 'top' ? -p : vAlign === 'middle' ? height / 2 : height + p;
+    
+    ctx.textAlign = align === 'left' ? 'right' : align === 'center' ? 'center' : 'left';
+    ctx.textBaseline = vAlign === 'top' ? 'bottom' : vAlign === 'middle' ? 'middle' : 'top';
+    ctx.fillStyle = textColor;
+    ctx.font = fs + 'px Sanserif';
+    ctx.fillText(text, x, y)
+  }
+
   contain (x: number, y: number):boolean {
     let { width: w, height: h } = this;
 

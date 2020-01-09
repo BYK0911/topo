@@ -10,6 +10,9 @@ abstract class TopoElement extends TopoEventTarget {
   root: ITopoElement;
   parent: TopoGroup;
   text: string = '';
+  textPosition: string = 'center-bottom';
+  fontSize: number = 12;
+  textColor: string = '#333';
   shadowColor: string = 'rgba(255, 255, 255, 0)';
   shadowOffsetX: number = 0;
   shadowOffsetY: number = 0;
