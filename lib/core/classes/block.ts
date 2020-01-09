@@ -10,9 +10,8 @@ class TopoBlock extends TopoElement implements ITopoBlock {
   rotation: number;
   scale: number;
 
-  constructor () {
+  protected constructor () {
     super();
-    this.type = 'TopoBlock';
     this.x = 0;
     this.y = 0;
     this.width = 0;

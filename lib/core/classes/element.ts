@@ -4,16 +4,15 @@ import TopoGroup from '../interfaces/group';
 
 let id: number = 0;
 class TopoElement extends TopoEventTarget implements ITopoElement {
-  id: string;
-  visible: boolean;
-  type: string;
+  readonly id: string;
+  readonly type: string;
   root: ITopoElement;
   parent: TopoGroup;
+  visible: boolean;
   
-  constructor () {
+  protected constructor () {
     super();
     this.id = 'TopoElement_' + id++;
-    this.type = 'TopoElement';
     this.root = null;
     this.parent = null;
     this.visible = true;

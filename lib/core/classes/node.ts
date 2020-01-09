@@ -1,9 +1,9 @@
 import TopoBlock from './block';
 
 class TopoNode extends TopoBlock {
+  readonly type: string = 'TopoNode';
   constructor () {
     super();
-    this.type = 'TopoNode';
     this.width = 50;
     this.height = 50;
   }

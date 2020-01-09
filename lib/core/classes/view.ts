@@ -1,15 +1,14 @@
 import attachEvent from '../../event/attachEvent';
 import TopoGroup from './group';
-import Coord from '../../util/coord';
 
 class TopoView extends TopoGroup {
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
   backgroundColor: string;
+  readonly type: string = 'TopoView';
 
   constructor () {
     super();
-    this.type = 'TopoView';
     this.scale = 1;
     this.width = 500;
     this.height = 400;
@@ -49,26 +48,6 @@ class TopoView extends TopoGroup {
     this.canvas.style.width = width + 'px';
     this.canvas.style.height = height + 'px';
   }
-
-  // getRelativeCoord (x:number = 0, y:number = 0) {
-  //   let coord = new Coord(x, y);
-
-  //   coord.scale(1 / this.scale, 1 / this.scale);
-  //   coord.translate(-this.x, -this.y);
-  //   coord.rotate(-this.rotation);
-
-  //   return coord;
-  // }
-
-  // getAbsoluteCoord (x:number = 0, y:number = 0) {
-  //   let coord = new Coord(x, y);
-    
-  //   coord.rotate(this.rotation);
-  //   coord.translate(this.x, this.y);
-  //   coord.scale(this.scale, this.scale);
-
-  //   return coord;
-  // }
 
   contain (x: number, y: number) :boolean {
     return true;

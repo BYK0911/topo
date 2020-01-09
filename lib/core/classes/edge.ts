@@ -8,10 +8,10 @@ class TopoEdge extends TopoElement implements TopoLine {
   lineDash: [0];
   lineWidth: number;
   color: string;
+  readonly type: string = 'TopoEdge';
 
   constructor () {
     super();
-    this.type = 'TopoEdge';
     this.points = [];
     this.lineDash = [0];
     this.lineWidth = 1;

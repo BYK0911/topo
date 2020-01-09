@@ -2,10 +2,9 @@ import TopoEdge from './edge';
 import isPointOnLine from '../../util/isPointOnLine';
 
 class TopoSEdge extends TopoEdge {
-
+  readonly type: string = 'TopoSEdge';
   constructor () {
     super();
-    this.type = 'TopoSEdge';
   }
 
   render (ctx: CanvasRenderingContext2D):void {

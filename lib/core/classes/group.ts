@@ -4,10 +4,9 @@ import TopoElement from './element';
 
 class TopoGroup extends TopoBlock implements ITopoGroup {
   elements: TopoElement[];
-
+  readonly type: string = 'TopoGroup';
   constructor () {
     super();
-    this.type = 'TopoGroup';
     this.elements = [];
   }
 
