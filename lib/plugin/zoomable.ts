@@ -19,7 +19,7 @@ function zoomable(el: TopoBlock) {
     }
 
     
-    el.zoom(delta > 0);
+    el.zoom(delta < 0);
     k = el.scale / s;
     
     dx = x - el.x;
