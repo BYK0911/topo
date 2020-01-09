@@ -5,8 +5,6 @@ import draggable from '../lib/plugin/draggable'
 const view = topo.init();
 zoomable(view);
 draggable(view);
-view.rotate(15);
-view.translate(300, 0);
 
 view.resize(window.innerWidth, window.innerHeight);
 
@@ -34,14 +32,20 @@ interface TopoEdge {
   lineDash: number[];
 }
 
+const ri = (a:number = 300, b?: number) => {
+  return Math.round(Math.random() * (b - a)) + a;
+}
+const w = window.innerWidth - 200;
+const h = window.innerHeight - 200;
+
 let nodes = [
-  { type: 'TopoNode', id: '0', x: 100, y: 100 },
-  { type: 'TopoNode', id: '1', x: 200, y: 100 },
-  { type: 'TopoNode', id: '2', x: 300, y: 100 },
-  { type: 'TopoNode', id: '3', x: 400, y: 100 },
-  { type: 'TopoNode', id: '4', x: 300, y: 200 },
-  { type: 'TopoNode', id: '5', x: 400, y: 200 },
-  { type: 'TopoNode', id: '6', x: 500, y: 200 }
+  { type: 'TopoNode', id: '0', x: ri(100, w), y: ri(100, h), backgroundColor: '#a5f' },
+  { type: 'TopoNode', id: '1', x: ri(100, w), y: ri(100, h), opacity: .5 },
+  { type: 'TopoNode', id: '2', x: ri(100, w), y: ri(100, h), rotation: 30 },
+  { type: 'TopoNode', id: '3', x: ri(100, w), y: ri(100, h), borderWidth: 1, borderColor: '#ddd' },
+  { type: 'TopoNode', id: '4', x: ri(100, w), y: ri(100, h), shadowBlur: 6, shadowColor: '#666', shadowOffsetX: 3, shadowOffsetY: 5 },
+  { type: 'TopoNode', id: '5', x: ri(100, w), y: ri(100, h), backgroundColor: '#5af' },
+  { type: 'TopoNode', id: '6', x: ri(100, w), y: ri(100, h), backgroundColor: '#f5a' }
 ]
 let edges = [
   { type: 'TopoEdge', points: ['1', '4'], lineWidth: 1, color: '#333', lineDash: [0] },
@@ -49,7 +53,7 @@ let edges = [
   { type: 'TopoSEdge', points: ['3', '6'], lineWidth: 1, color: '#fa5', lineDash: [0] }
 ]
 function loadView(nodes:TopoNode[], edges:TopoEdge[]) {
-  const ns = [], nmap = {}, es = [];
+  const ns = [], nmap = {};
 
   nodes.forEach(n => {
     const node = new topo.TopoNode();
