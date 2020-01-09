@@ -18,12 +18,11 @@ class TopoNode extends TopoBlock implements ITopoBlock{
       borderWidth, borderColor,
       backgroundColor, opacity
     } = this;
-    x -= width / 2;
-    y -= height / 2;
     
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(this.rotation / 180 * Math.PI)
+    ctx.translate(-width / 2, -height / 2);
     ctx.scale(this.scale, this.scale);
 
     ctx.globalAlpha = opacity;
