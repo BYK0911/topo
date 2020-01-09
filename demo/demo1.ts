@@ -39,9 +39,9 @@ const w = window.innerWidth - 200;
 const h = window.innerHeight - 200;
 
 let nodes = [
-  { type: 'TopoNode', id: '0', x: ri(100, w), y: ri(100, h), backgroundColor: '#a5f' },
+  { type: 'TopoNode', id: '0', x: ri(100, w), y: ri(100, h), backgroundColor: '#a5f', text: 'Topo Node', width: 60, height: 60 },
   { type: 'TopoNode', id: '1', x: ri(100, w), y: ri(100, h), opacity: .5 },
-  { type: 'TopoNode', id: '2', x: ri(100, w), y: ri(100, h), rotation: 30 },
+  { type: 'TopoNode', id: '2', x: ri(100, w), y: ri(100, h), rotation: 45 },
   { type: 'TopoNode', id: '3', x: ri(100, w), y: ri(100, h), borderWidth: 1, borderColor: '#ddd' },
   { type: 'TopoNode', id: '4', x: ri(100, w), y: ri(100, h), shadowBlur: 6, shadowColor: '#666', shadowOffsetX: 3, shadowOffsetY: 5 },
   { type: 'TopoNode', id: '5', x: ri(100, w), y: ri(100, h), backgroundColor: '#5af' },
