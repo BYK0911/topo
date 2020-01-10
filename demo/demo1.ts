@@ -1,6 +1,7 @@
 import topo from '../lib';
 import zoomable from '../lib/plugin/zoomable';
 import draggable from '../lib/plugin/draggable'
+import resizable from '../lib/plugin/resizable';
 
 const view = topo.init();
 zoomable(view);
@@ -57,9 +58,7 @@ function loadView(nodes:TopoNode[], edges:TopoEdge[]) {
 
   nodes.forEach(n => {
     const node = new topo.TopoNode();
-    draggable(node);
     Object.assign(node, n);
-
     ns.push(node);
     nmap[n.id] = node;
   })
@@ -78,12 +77,14 @@ function loadView(nodes:TopoNode[], edges:TopoEdge[]) {
   curve.points.push(ns[3], { x: 100, y: 100 }, {x: 500, y: 500}, ns[4]);
   view.add(curve);
 
-  ns.forEach(n => view.add(n));
+  ns.forEach(n => {
+    view.add(n)
+    draggable(n);
+    resizable(n);
+  });
 }
 
 loadView(nodes, edges);
-
-console.log(view);
 
 animate();
 
@@ -99,3 +100,7 @@ view.on('mouseleave', function (e) {
   e.stopPropagation();
   e.target.shadowBlur = 0;
 })
+
+window.onresize = function () {
+  view.resize(window.innerWidth, window.innerHeight);
+}
