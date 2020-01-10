@@ -1,13 +1,13 @@
 import TopoEventTarget from '../../event/TopoEventTarget';
-import ITopoElement from '../interfaces/element';
 import TopoGroup from './group';
+import TopoView from './view';
 
 let id: number = 0;
 abstract class TopoElement extends TopoEventTarget {
   
   readonly id: string = 'TopoElement_' + (id++);
   readonly type: string;
-  root: ITopoElement;
+  root: TopoView;
   parent: TopoGroup;
   text: string = '';
   textPosition: string = 'center-bottom';

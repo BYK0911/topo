@@ -1,6 +1,7 @@
 import TopoBlock from './block';
 import ITopoGroup from '../interfaces/group';
 import TopoElement from './element';
+import TopoView from './view';
 
 class TopoGroup extends TopoBlock implements ITopoGroup {
   protected elements: TopoElement[];
@@ -13,6 +14,10 @@ class TopoGroup extends TopoBlock implements ITopoGroup {
   } 
   constructor () {
     super();
+    this.x = 0;
+    this.y = 0;
+    this.width = 0;
+    this.height = 0;
     this.elements = [];
   }
 
@@ -34,7 +39,11 @@ class TopoGroup extends TopoBlock implements ITopoGroup {
   add (element:TopoElement) {
     if (this.elements.includes(element)) return;
     element.parent = this;
-    element.root = this.root || this;
+    if (this instanceof TopoView) {
+      element.root = this.root || this;
+    } else {
+      element.root = this.root;
+    }
     this.elements.push(element);
   }
 

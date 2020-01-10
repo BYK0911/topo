@@ -2,12 +2,13 @@ import TopoElement from './element';
 import Coord from '../../util/coord';
 
 abstract class TopoBlock extends TopoElement {
+  [x: string]: any;
   x: number;
   y: number;
   width: number;
   height: number;
-  rotation: number;
-  scale: number;
+  rotation: number = 0;
+  scale: number = 1;
   
   backgroundColor: string = 'rgba(255, 255, 255, 0)';
   borderWidth: number = 1;
@@ -15,12 +16,6 @@ abstract class TopoBlock extends TopoElement {
 
   protected constructor () {
     super();
-    this.x = 0;
-    this.y = 0;
-    this.width = 0;
-    this.height = 0;
-    this.rotation = 0;
-    this.scale = 1;
   }
 
   drawText (ctx: CanvasRenderingContext2D): void {
