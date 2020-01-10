@@ -5,8 +5,14 @@ function draggable (el: TopoBlock ):void {
   let prevX: number;
   let prevY: number;
 
-  el.on('dragstart', function (e: TopoEvent) {
+  el.on('mousedown', function (e) {
     e.stopPropagation();
+    e.originalEvent.target.style.cursor = 'move';
+  })
+
+  el.on('dragstart', function (e) {
+    e.stopPropagation();
+    e.originalEvent.target.style.cursor = 'move';
     prevX = e.originalEvent.offsetX;
     prevY = e.originalEvent.offsetY;
   })
@@ -26,6 +32,11 @@ function draggable (el: TopoBlock ):void {
     el.translate(dx, dy);
     prevX = e.originalEvent.offsetX;
     prevY = e.originalEvent.offsetY;
+  })
+
+  el.on('mouseup', function (e) {
+    e.stopPropagation();
+    e.originalEvent.target.style.cursor = 'default';
   })
 }
 
