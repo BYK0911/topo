@@ -20,6 +20,7 @@ class TopoEdge extends TopoElement implements TopoLine {
   }
 
   render (ctx: CanvasRenderingContext2D):void {
+    ctx.save();
     ctx.beginPath();
     this.points.forEach((p, i) => {
       let { x, y } = this.getCoord(p);
@@ -29,11 +30,20 @@ class TopoEdge extends TopoElement implements TopoLine {
         ctx.lineTo(x, y);
       }
     })
+    ctx.globalAlpha = this.opacity;
+    if (this.shadowBlur) {
+      ctx.shadowBlur = this.shadowBlur;
+      ctx.shadowOffsetX = this.shadowOffsetX;
+      ctx.shadowOffsetY = this.shadowOffsetY;
+      ctx.shadowColor = this.shadowColor;
+    }
+
     ctx.setLineDash(this.lineDash);
     ctx.lineWidth = this.lineWidth;
     ctx.strokeStyle = this.color;
     ctx.stroke();
     ctx.closePath();
+    ctx.restore();
   }
 
   contain (x: number, y: number):boolean {
@@ -49,14 +59,12 @@ class TopoEdge extends TopoElement implements TopoLine {
     return false;
   }
 
-  protected getCoord (p) {
-    let { x, y } = p;
+  protected getCoord (p: {x: number, y: number}) {
     if (p instanceof TopoBlock) {
-      let coord = p.getAbsoluteCoord();
-      x = coord.x;
-      y = coord.y;
+      return p.resolveCoord(this.parent);
+    } else {
+      return p;
     }
-    return { x, y };
   }
 }
 
