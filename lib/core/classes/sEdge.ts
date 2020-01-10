@@ -8,7 +8,7 @@ class TopoSEdge extends TopoEdge {
   }
 
   render (ctx: CanvasRenderingContext2D):void {
-    let [{ x: x1, y: y1 }, { x: x2, y: y2}] = this.points;
+    let [{ x: x1, y: y1 }, { x: x2, y: y2}] = this.points.map(p => this.getCoord(p));
     
     ctx.beginPath();
     ctx.moveTo(x1, y1);
@@ -23,8 +23,8 @@ class TopoSEdge extends TopoEdge {
   }
 
   contain (x: number, y: number):boolean {
-    let { x: x1, y: y1 } = this.points[0];
-    let { x: x2, y: y2 } = this.points[this.points.length - 1];
+    let { x: x1, y: y1 } = this.getCoord(this.points[0]);
+    let { x: x2, y: y2 } = this.getCoord(this.points[1]);
     let yc = (y1 + y2) / 2;
     let ps = [[x1, y1], [x1, yc], [x2, yc], [x2, y2]];
     let i = -1;

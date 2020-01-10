@@ -2,6 +2,7 @@ import TopoElement from './element';
 import TopoLine from '../interfaces/line';
 import Coord from '../interfaces/coord';
 import isPointOnLine from '../../util/isPointOnLine';
+import TopoBlock from './block';
 
 class TopoEdge extends TopoElement implements TopoLine {
   points: Coord[];
@@ -21,10 +22,11 @@ class TopoEdge extends TopoElement implements TopoLine {
   render (ctx: CanvasRenderingContext2D):void {
     ctx.beginPath();
     this.points.forEach((p, i) => {
+      let { x, y } = this.getCoord(p);
       if (i === 0) {
-        ctx.moveTo(p.x, p.y);
+        ctx.moveTo(x, y);
       } else {
-        ctx.lineTo(p.x, p.y);
+        ctx.lineTo(x, y);
       }
     })
     ctx.setLineDash(this.lineDash);
@@ -35,10 +37,26 @@ class TopoEdge extends TopoElement implements TopoLine {
   }
 
   contain (x: number, y: number):boolean {
-    let { x: x1, y: y1 } = this.points[0];
-    let { x: x2, y: y2 } = this.points[this.points.length - 1];
+    let i = -1;
+    let len = this.points.length - 1;
 
-    return isPointOnLine(x1, y1, x2, y2, x, y);
+    while (++i < len) {
+      let { x: x0, y: y0 } = this.getCoord(this.points[i]);
+      let { x: x1, y: y1 } = this.getCoord(this.points[i + 1]);
+      if (isPointOnLine(x0, y0, x1, y1, x, y)) return true
+    }
+
+    return false;
+  }
+
+  protected getCoord (p) {
+    let { x, y } = p;
+    if (p instanceof TopoBlock) {
+      let coord = p.getAbsoluteCoord();
+      x = coord.x;
+      y = coord.y;
+    }
+    return { x, y };
   }
 }
 
