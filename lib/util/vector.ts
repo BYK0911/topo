@@ -36,6 +36,10 @@ const vector = {
     return res;
   },
 
+  cross (v1: number[], v2: number[]): number {
+    return v1[0] * v2[1] - v1[1] * v2[0];
+  },
+
   crossNorm (v1: number[], v2: number[]): number {
     return Math.abs(v1[0] * v2[1] - v1[1] * v2[0]);
   },

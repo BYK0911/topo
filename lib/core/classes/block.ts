@@ -88,7 +88,6 @@ abstract class TopoBlock extends TopoElement {
       elParents.unshift(_el);
       _el = _el.parent;
     }
-
     for (let i = thatParents.length - 1; i >= 0; i--) {
       if ((index = elParents.indexOf(thatParents[i])) !== -1) {
         break;
