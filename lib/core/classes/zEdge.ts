@@ -10,16 +10,26 @@ class TopoZEdge extends TopoEdge {
   render (ctx: CanvasRenderingContext2D):void {
     let [{ x: x1, y: y1 }, { x: x2, y: y2}] = this.points.map(p => this.getCoord(p));
     
+    ctx.save();
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo((x1 + x2) / 2, y1);
     ctx.lineTo((x1 + x2) / 2, y2);
     ctx.lineTo(x2, y2);
+
+    ctx.globalAlpha = this.opacity;
+    if (this.shadowBlur) {
+      ctx.shadowBlur = this.shadowBlur;
+      ctx.shadowOffsetX = this.shadowOffsetX;
+      ctx.shadowOffsetY = this.shadowOffsetY;
+      ctx.shadowColor = this.shadowColor;
+    }
     ctx.setLineDash(this.lineDash);
     ctx.lineWidth = this.lineWidth;
     ctx.strokeStyle = this.color;
     ctx.stroke();
     ctx.closePath();
+    ctx.restore();
   }
 
   contain (x: number, y: number):boolean {
