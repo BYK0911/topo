@@ -42,7 +42,7 @@ let nodes = [
   { type: 'TopoNode', id: '0', x: ri(100, w), y: ri(100, h), backgroundColor: '#a5f', text: 'Topo Node', width: 60, height: 60 },
   { type: 'TopoNode', id: '1', x: ri(100, w), y: ri(100, h), opacity: .5 },
   { type: 'TopoNode', id: '2', x: ri(100, w), y: ri(100, h), rotation: 45 },
-  { type: 'TopoNode', id: '3', x: ri(100, w), y: ri(100, h), borderWidth: 1, borderColor: '#ddd' },
+  { type: 'TopoNode', id: '3', x: ri(100, w), y: ri(100, h), borderWidth: 1, borderColor: '#666' },
   { type: 'TopoNode', id: '4', x: ri(100, w), y: ri(100, h), shadowBlur: 6, shadowColor: '#666', shadowOffsetX: 3, shadowOffsetY: 5 },
   { type: 'TopoNode', id: '5', x: ri(100, w), y: ri(100, h), backgroundColor: '#5af' },
   { type: 'TopoNode', id: '6', x: ri(100, w), y: ri(100, h), backgroundColor: '#f5a' }
@@ -69,14 +69,7 @@ function loadView(nodes:TopoNode[], edges:TopoEdge[]) {
     edge.lineWidth = e.lineWidth;
     edge.lineDash = e.lineDash;
     edge.color = e.color;
-    e.points.forEach(nid => {
-      let n = {};
-      Object.defineProperties(n, {
-        x: { get: () => nmap[nid].getAbsoluteCoord().x },
-        y: { get: () => nmap[nid].getAbsoluteCoord().y }
-      })
-      edge.points.push(n);
-    })
+    e.points.forEach(nid => edge.points.push(nmap[nid]))
 
     view.add(edge);
   })
@@ -89,3 +82,16 @@ loadView(nodes, edges);
 console.log(view);
 
 animate();
+
+view.on('mouseenter', function (e) {
+  e.stopPropagation();
+  e.target.shadowBlur = 6;
+  e.target.shadowOffsetX = 2;
+  e.target.shadowOffsetY = 2;
+  e.target.shadowColor = '#000';
+})
+
+view.on('mouseleave', function (e) {
+  e.stopPropagation();
+  e.target.shadowBlur = 0;
+})
