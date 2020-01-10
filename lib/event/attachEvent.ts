@@ -63,17 +63,24 @@ function attachEvent (view:TopoView) {
           trigger('drag', path, e);
         }
       } else {
-        let prevEventTarget:TopoElement = path[path.length - 1] || null;
-        // 重新计算当前的事件对象
-        refreshEventTarget(e);
-        let currentEventTarget:TopoElement = path[path.length - 1];
+        let prevPath: TopoElement[];
+        let prevEventTarget:TopoElement;
+        let currentEventTarget:TopoElement;
+
+        prevPath = path;
+        prevEventTarget = path[path.length - 1];
+        refreshEventTarget(e); // 重新计算当前的事件对象
+        currentEventTarget = path[path.length - 1];
         
         if (prevEventTarget === currentEventTarget) {
           trigger('mousemove', path, e);
-        }
-        else {
-          if (prevEventTarget) trigger('mouseleave', [prevEventTarget], e);
-          trigger('mouseenter', [currentEventTarget], e);
+        } else {
+
+          if (prevEventTarget) {
+            trigger('mouseleave', prevPath, e);
+          }
+
+          trigger('mouseenter', path, e);
         }
       }
     },
