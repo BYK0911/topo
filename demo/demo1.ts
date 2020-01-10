@@ -74,6 +74,10 @@ function loadView(nodes:TopoNode[], edges:TopoEdge[]) {
     view.add(edge);
   })
 
+  let curve = new topo.TopoCurve();
+  curve.points.push(ns[3], { x: 100, y: 100 }, {x: 500, y: 500}, ns[4]);
+  view.add(curve);
+
   ns.forEach(n => view.add(n));
 }
 
