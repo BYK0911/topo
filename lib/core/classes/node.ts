@@ -27,6 +27,12 @@ class TopoNode extends TopoBlock implements ITopoBlock{
 
     ctx.globalAlpha = opacity;
     
+    if (borderWidth) {
+      ctx.lineWidth = borderWidth;
+      ctx.strokeStyle = borderColor;
+      ctx.strokeRect(0, 0, width, height);
+    }
+
     if (shadowBlur) {
       ctx.shadowOffsetX = shadowOffsetX;
       ctx.shadowOffsetY = shadowOffsetY;
@@ -36,12 +42,6 @@ class TopoNode extends TopoBlock implements ITopoBlock{
 
     ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, width, height);
-
-    if (borderWidth) {
-      ctx.lineWidth = borderWidth;
-      ctx.strokeStyle = borderColor;
-      ctx.strokeRect(0, 0, width, height);
-    }
 
     if (this.text) {
       this.drawText(ctx);
